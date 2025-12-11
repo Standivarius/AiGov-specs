@@ -1,0 +1,10 @@
+- `includes()` – case-insensitive substring check against target; metrics: `accuracy`, `stderr`.
+- `match()` – prefix/suffix match with options to ignore case/whitespace/punctuation; metrics: `accuracy`, `stderr`.
+- `pattern()` – regex extraction of answer before comparison; metrics: `accuracy`, `stderr`.
+- `answer()` – parses outputs with `ANSWER:` prefixes (letters, words, remainder); metrics: `accuracy`, `stderr`.
+- `exact()` – normalized exact string match across one or more targets; metrics: `accuracy`, `stderr`.
+- `f1()` – token-level F1 for free-form text answers; metrics: `f1`, `stderr`.
+- `choice()` – parses A/B/C/D style answers for `multiple_choice()` solver; metrics: `accuracy`, `stderr`.
+- `model_graded_qa()` – model-graded rubric for open-ended QA; configurable template/instructions/history, partial credit, multiple grader models; metrics: `accuracy`, `stderr`.
+- `model_graded_fact()` – model-graded fact check variant for factual inclusion; same configuration surface as QA; metrics: `accuracy`, `stderr`.
+- Meta/utility: `multi_scorer` (ensembles), reducers (`mean_score`, `median_score`, `max_score`, `mode_score`, `at_least`, `pass_at`), grouped metrics, and statistical metrics (`mean`, `std`, `var`, `bootstrap_stderr`, `stderr`).

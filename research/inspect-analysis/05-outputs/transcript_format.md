@@ -1,0 +1,6 @@
+- **Messages:** `EvalSample.messages` stores chat history as `ChatMessage{role, content, name?, tool_call_id?, attachments}`. Roles include `system`, `user`, `assistant`, and tool messages produced during `generate()` or tool calls.
+- **Outputs:** `EvalSample.output` mirrors the final assistant completion plus raw model call metadata; intermediate calls appear as events/messages in order.
+- **Events:** `EvalSample.events` captures structured runtime events (model calls, tool calls/results, limits, approvals). Attachments referenced via `attachment://<key>` are stored in `EvalSample.attachments`.
+- **Tool runs & sandbox:** Tool use appears as events with tool name, arguments, results (stdout/stderr), and sandbox metadata. Approval flows are logged when enabled.
+- **Images/structured content:** By default images are base64-logged unless `--no-log-images`. Structured outputs (response_schema) are stored in message content; transcripts preserve all content types.
+- **Condensed view:** `EvalSample.summary()` thins large fields for fast loading; full transcripts remain in `.eval`/.json logs and via `read_eval_log(resolve_attachments=True)` to inline attachment content.

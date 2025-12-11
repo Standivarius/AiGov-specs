@@ -1,0 +1,6 @@
+- **Tools:** Built-in tools include `bash`/`python` execution (with sandboxing), `web_search` (configurable providers), `web_browser` (headless browsing), `computer` (browser automation), `code_execution` (providers), `memory`, `think`, `text_editor`, `update_plan`, and MCP adapters (HTTP/SSE/stdio/sandbox).
+- **Sandboxes:** Core `local` and `docker` sandboxes isolate tool execution; custom sandboxes can target other runtimes or cloud hosts.
+- **Model providers:** Broad provider support (OpenAI/Anthropic/Google/Mistral/DeepSeek/Grok/Bedrock/Azure/Together/Groq/Fireworks/SambaNova/Cloudflare/Perplexity/HuggingFace/vLLM/SGLang/TransformerLens/Ollama/llama-cpp/OpenRouter/HF Inference Providers/custom).
+- **Storage/logging:** Logs readable/writable via fsspec URIs (file, `s3://`, Azure); `.eval` and `.json` formats supported with CLI tools to view/condense/export.
+- **Datasets:** Load from CSV/JSON/JSONL, Hugging Face Hub (with split/FieldSpec mapping), or custom readers; includes 100+ Inspect Evals suites.
+- **Governance hooks:** Approval policies for tool calls, event hooks for telemetry/monitoring, and extensible storage/approver/hook entry points.

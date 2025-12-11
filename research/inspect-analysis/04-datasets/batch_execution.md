@@ -1,0 +1,6 @@
+- **Single eval:** `inspect eval task.py --model <provider/model>` or `eval(task, ...)` runs sequentially or in parallel across samples using async scheduling (`max_samples`, `max_connections`).
+- **Eval sets:** Use `inspect eval-set ...` or `eval_set(tasks=[...], model=[...], log_dir=...)` to run multiple tasks/models together. Features: automatic retries, reuse of completed samples, cleanup of failed logs, and incremental re-runs.
+- **Concurrency controls:** `--max-samples`, `--max-tasks`, `--max-connections`, `--max-subprocesses`, `--max-sandboxes`; sample-level limits (`--message-limit`, `--token-limit`, `--time-limit`, `--working-limit`) and early stopping callbacks.
+- **Sample selection/shuffle:** `--sample-id` filter (supports globs), `--limit`, `--sample-shuffle` (with optional seed) for randomized batches.
+- **Batching to providers:** Enable provider batch APIs with `--batch` / `-M responses_api=true` (OpenAI compatible) or `GenerateConfig.batch`; provider-specific batch size settings available.
+- **Logging:** Each run produces `.eval`/`.json` logs; eval-set returns log headers for large runs and supports retry/condense commands for long batches.

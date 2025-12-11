@@ -1,0 +1,7 @@
+- **Core entry points:** `eval(task_or_path, model=..., solver=..., scorer=..., log_dir=..., **options)` and `eval_set(tasks=[...], model=[...], log_dir=...)` for batch runs with retries.
+- **Defining tasks:** Decorate functions with `@task` returning `Task(dataset=..., solver=..., scorer=...)`. Parameterize tasks with function args; override via `eval(..., task_args)` or CLI `-T key=value/--task-config`.
+- **Solvers & scorers:** Build with `@solver` / `@scorer` decorators; use `chain`, `plan`, `fork`, `use_tools`, `self_critique`, `model_graded_*` for common patterns. Agents (`react`, `basic_agent`, `human_agent`) convert via `as_solver()`.
+- **Models:** `get_model(name=None, role=None, config=GenerateConfig(...), **model_args)` resolves providers (including OpenRouter and custom @modelapi). Model roles allow multiple providers in one task.
+- **Datasets:** `csv_dataset`, `json_dataset`, `file_dataset`, `hf_dataset`, `MemoryDataset`, and `FieldSpec`/`record_to_sample` to reshape external schemas. Samples accept `files`, `sandbox`, `setup`.
+- **Logs & scoring:** `EvalLog` returned from `eval()`; use `read_eval_log`, `write_eval_log`, `condense_eval_log` for post-processing. Scores accessible via `log.results.scores` and `log.samples`.
+- **Tooling:** Register tools with `@tool`/MCP; pass to solvers via `use_tools(...)`. Approval policies and sandbox specs configurable per task or eval call.

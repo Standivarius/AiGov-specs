@@ -1,0 +1,6 @@
+- **Formats:** `.eval` (binary, compact, fast streaming) and `.json` (plain JSON). Both use the same schema and can be converted interchangeably.
+- **APIs:** `read_eval_log(path, resolve_attachments=False)`, `write_eval_log(log, location=None)`, `condense_eval_log(log)` (or CLI `inspect log condense`) to strip large fields for sharing. `EvalLog` exposes `samples`, `results`, `plan`, `stats`, and `model_usage` for programmatic export.
+- **CLI:** `inspect log show <file>` (human-readable), `inspect log json <file>` (emit JSON), `inspect log condense <file>`, `inspect view <logdir>` (UI viewer), `inspect score` (score existing transcripts), `inspect trace` (debug model calls), `inspect list` (discover tasks/solvers).
+- **Storage backends:** Any fsspec URI (`file://`, `s3://`, Azure) supported for reading/writing. Env var `INSPECT_LOG_DIR` sets default log root.
+- **Images/attachments:** Include base64 assets unless `--no-log-images`; attachments can be resolved via API for downstream export.
+- **Custom exporters:** Walk `EvalLog.samples` + `results` to emit CSV/Parquet/VerifyWise formats; token usage per model is available via `EvalLog.stats.model_usage`.

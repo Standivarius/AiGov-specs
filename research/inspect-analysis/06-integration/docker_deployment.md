@@ -1,0 +1,5 @@
+- Inspect itself is a Python package; production runs typically execute on hosts with Python + provider SDKs installed. The sandbox layer can isolate tool code using Docker even when the eval host is bare metal or another container.
+- **Sandbox Docker:** Set `--sandbox docker` (or task `sandbox="docker"`) to run tools inside containers. Per-sample `files` and `setup` scripts are mounted/executed inside the sandbox. Cleanup is automatic unless `--sandbox-cleanup` is disabled.
+- **Images:** Examples and tests include Dockerfiles for tool environments (e.g., CTF tasks, MCP servers). Custom sandboxes can be built by extending `SandboxEnvironment` and pointing to custom images.
+- **Running inside Docker:** When the eval runner already runs in a container, use `sandbox="local"` to avoid nesting or ensure Docker socket access is available for `docker` sandbox.
+- **Devcontainer:** `.devcontainer` configuration is provided for local development; docs include `_sandbox-dockerfile.md` guidance for building sandbox images.

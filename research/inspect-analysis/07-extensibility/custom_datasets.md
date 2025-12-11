@@ -1,0 +1,6 @@
+- **Map existing schemas:** Use `FieldSpec` (`input`, `target`, `id`, `metadata=[...]`) with `csv_dataset/json_dataset/file_dataset` to rename fields. For complex transforms, supply `record_to_sample(record) -> Sample`.
+- **Programmatic construction:** Use `MemoryDataset([Sample,...])` for on-the-fly scenarios or synthetic generation. Samples accept `metadata`, per-sample `sandbox`, `files`, and `setup` scripts.
+- **Hugging Face Hub:** `hf_dataset(repo, split=..., sample_fields=FieldSpec, trust=True/False)` to pull public datasets; useful for reusing public benchmarks.
+- **Variable injection:** Store scenario variables in `metadata` and interpolate in prompts via `prompt_template`/message solvers.
+- **Shuffling/filtering:** `dataset.shuffle(seed)`, `dataset.filter(predicate)`, slicing, and CLI filters (`--sample-id`, `--limit`) to assemble curated subsets.
+- **Packaging:** Ship datasets inside Python packages (as with Inspect Evals) and expose task entry points so they are discoverable via `inspect list`.

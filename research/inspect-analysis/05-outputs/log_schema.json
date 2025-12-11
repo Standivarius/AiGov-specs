@@ -1,0 +1,219 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EvalLog",
+  "type": "object",
+  "description": "Serialized evaluation log (.eval binary or .json text).",
+  "properties": {
+    "version": { "type": "integer", "description": "Log format version (2)." },
+    "status": { "type": "string", "enum": ["started", "success", "cancelled", "error"] },
+    "eval": {
+      "type": "object",
+      "description": "Identity and configuration of the evaluation.",
+      "properties": {
+        "eval_set_id": { "type": ["string","null"] },
+        "eval_id": { "type": "string" },
+        "run_id": { "type": "string" },
+        "created": { "type": "string", "description": "UTC timestamp" },
+        "task": { "type": "string" },
+        "task_id": { "type": "string" },
+        "task_version": { "type": ["integer","string"] },
+        "task_file": { "type": ["string","null"] },
+        "task_display_name": { "type": ["string","null"] },
+        "task_registry_name": { "type": ["string","null"] },
+        "task_attribs": { "type": "object" },
+        "task_args": { "type": "object" },
+        "task_args_passed": { "type": "object" },
+        "solver": { "type": ["string","null"] },
+        "solver_args": { "type": ["object","null"] },
+        "tags": { "type": ["array","null"], "items": { "type": "string" } },
+        "dataset": {
+          "type": "object",
+          "properties": {
+            "name": { "type": ["string","null"] },
+            "location": { "type": ["string","null"] },
+            "samples": { "type": ["integer","null"] },
+            "sample_ids": { "type": ["array","null"] },
+            "shuffled": { "type": ["boolean","null"] }
+          }
+        },
+        "sandbox": { "description": "SandboxEnvironmentSpec", "type": ["object","array","string","null"] },
+        "model": { "type": "string" },
+        "model_generate_config": { "type": "object" },
+        "model_base_url": { "type": ["string","null"] },
+        "model_args": { "type": "object" },
+        "model_roles": { "type": ["object","null"] },
+        "config": { "$ref": "#/$defs/evalConfig" },
+        "revision": { "type": ["object","null"], "description": "Git commit info" },
+        "packages": { "type": "object" },
+        "metadata": { "type": ["object","null"] },
+        "scorers": { "type": ["array","null"], "items": { "$ref": "#/$defs/evalScorer" } },
+        "metrics": {
+          "type": ["array","object","null"],
+          "description": "Metric definitions as provided to the run."
+        }
+      },
+      "required": ["eval_id","created","task","model","config","dataset"]
+    },
+    "plan": {
+      "type": "object",
+      "description": "Solver plan used for the eval.",
+      "properties": {
+        "name": { "type": "string" },
+        "steps": { "type": "array", "items": { "$ref": "#/$defs/planStep" } },
+        "finish": { "$ref": "#/$defs/planStep" },
+        "config": { "type": "object", "description": "GenerateConfig applied to plan." }
+      }
+    },
+    "results": {
+      "type": ["object","null"],
+      "properties": {
+        "total_samples": { "type": "integer" },
+        "completed_samples": { "type": "integer" },
+        "early_stopping": { "type": ["object","null"] },
+        "scores": { "type": "array", "items": { "$ref": "#/$defs/evalScore" } },
+        "metadata": { "type": ["object","null"] }
+      }
+    },
+    "stats": {
+      "type": "object",
+      "properties": {
+        "started_at": { "type": "string" },
+        "completed_at": { "type": "string" },
+        "model_usage": { "type": "object", "description": "Per-model token usage" }
+      }
+    },
+    "error": { "type": ["object","null"], "description": "EvalError when status=error" },
+    "samples": {
+      "type": ["array","null"],
+      "description": "Full per-sample detail (may be omitted in condensed headers).",
+      "items": { "$ref": "#/$defs/evalSample" }
+    },
+    "reductions": {
+      "type": ["array","null"],
+      "description": "Reduced per-sample scores across epochs.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "scorer": { "type": "string" },
+          "reducer": { "type": ["string","null"] },
+          "samples": { "type": "array", "items": { "$ref": "#/$defs/evalSampleScore" } }
+        }
+      }
+    }
+  },
+  "required": ["version","status","eval","plan","stats"],
+  "$defs": {
+    "evalConfig": {
+      "type": "object",
+      "properties": {
+        "limit": { "type": ["integer","array","null"] },
+        "sample_id": { "type": ["string","integer","array","null"] },
+        "sample_shuffle": { "type": ["boolean","integer","null"] },
+        "epochs": { "type": ["integer","null"] },
+        "epochs_reducer": { "type": ["array","null"] },
+        "approval": { "type": ["object","array","string","null"] },
+        "fail_on_error": { "type": ["boolean","number","null"] },
+        "continue_on_fail": { "type": ["boolean","null"] },
+        "retry_on_error": { "type": ["integer","null"] },
+        "message_limit": { "type": ["integer","null"] },
+        "token_limit": { "type": ["integer","null"] },
+        "time_limit": { "type": ["integer","null"] },
+        "working_limit": { "type": ["integer","null"] },
+        "max_samples": { "type": ["integer","null"] },
+        "max_tasks": { "type": ["integer","null"] },
+        "max_subprocesses": { "type": ["integer","null"] },
+        "max_sandboxes": { "type": ["integer","null"] },
+        "sandbox_cleanup": { "type": ["boolean","null"] },
+        "log_samples": { "type": ["boolean","null"] },
+        "log_realtime": { "type": ["boolean","null"] },
+        "log_images": { "type": ["boolean","null"] },
+        "log_buffer": { "type": ["integer","null"] },
+        "log_shared": { "type": ["integer","null"] },
+        "score_display": { "type": ["boolean","null"] }
+      }
+    },
+    "planStep": {
+      "type": "object",
+      "properties": {
+        "solver": { "type": "string" },
+        "params": { "type": "object" }
+      },
+      "required": ["solver"]
+    },
+    "evalScore": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "scorer": { "type": "string" },
+        "reducer": { "type": ["string","null"] },
+        "scored_samples": { "type": ["integer","null"] },
+        "unscored_samples": { "type": ["integer","null"] },
+        "params": { "type": "object" },
+        "metrics": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "value": { "type": ["number","integer"] },
+              "params": { "type": "object" },
+              "metadata": { "type": ["object","null"] }
+            }
+          }
+        },
+        "metadata": { "type": ["object","null"] }
+      },
+      "required": ["name","scorer","metrics"]
+    },
+    "evalSample": {
+      "type": "object",
+      "properties": {
+        "id": { "type": ["integer","string"] },
+        "epoch": { "type": "integer" },
+        "input": { "type": ["string","array"] },
+        "choices": { "type": ["array","null"] },
+        "target": { "type": ["string","array"] },
+        "sandbox": { "type": ["object","array","string","null"] },
+        "files": { "type": ["array","null"] },
+        "setup": { "type": ["string","null"] },
+        "messages": { "type": "array", "items": { "type": "object" } },
+        "output": { "type": "object" },
+        "scores": { "type": ["object","null"] },
+        "metadata": { "type": "object" },
+        "store": { "type": "object" },
+        "events": { "type": "array", "items": { "type": "object" } },
+        "model_usage": { "type": "object" },
+        "started_at": { "type": ["string","null"] },
+        "completed_at": { "type": ["string","null"] },
+        "total_time": { "type": ["number","null"] },
+        "working_time": { "type": ["number","null"] },
+        "uuid": { "type": ["string","null"] },
+        "error": { "type": ["object","null"] },
+        "error_retries": { "type": ["array","null"] },
+        "attachments": { "type": "object" },
+        "limit": { "type": ["object","null"] }
+      },
+      "required": ["id","epoch","input","target","messages","output"]
+    },
+    "evalSampleScore": {
+      "type": "object",
+      "properties": {
+        "value": {},
+        "answer": { "type": ["string","null"] },
+        "explanation": { "type": ["string","null"] },
+        "metadata": { "type": ["object","null"] },
+        "sample_id": { "type": ["integer","string","null"] }
+      }
+    },
+    "evalScorer": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "options": { "type": ["object","null"] },
+        "metrics": { "type": ["array","object","null"] },
+        "metadata": { "type": ["object","null"] }
+      },
+      "required": ["name"]
+    }
+  }
+}

@@ -1,0 +1,5 @@
+- **Inspect Sample core fields:** `input` (text or chat), `target` (expected/ rubric), optional `choices`, `id`, `metadata`, `sandbox`, `files`, `setup`.
+- **Likely VerifyWise fields (assumed):** `prompt`/`instruction`, `expected_output`, optional `options`, `case_id`, `tags` (category/difficulty), and maybe attachments.
+- **Mapping:** `prompt -> input`; `expected_output -> target`; `options -> choices`; `case_id -> id`; `tags/metadata -> metadata`; `attachments/setup -> files/setup`; safety/compliance labels fit naturally in `metadata`.
+- **Structure differences:** Inspect allows chat-style `input`, per-sample sandbox/files, and explicit setup scripts. VerifyWise schemas without these fields can ignore them; if VerifyWise carries extra fields they can be preserved under `metadata`.
+- **Compatibility:** High—`FieldSpec` or `record_to_sample()` can reshape VerifyWise JSON/CSV into Inspect Samples without losing metadata; results can be exported back by walking EvalLogs and emitting VerifyWise keys.

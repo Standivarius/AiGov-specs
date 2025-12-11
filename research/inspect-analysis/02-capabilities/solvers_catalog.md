@@ -1,0 +1,12 @@
+- `prompt_template()` – string-template substitution for user prompts with `{prompt}` and metadata/params injection.
+- `system_message()` / `user_message()` / `assistant_message()` – insert chat messages with metadata/params substitution.
+- `chain_of_thought()` – rewrites prompt to request stepwise reasoning and a final answer line.
+- `use_tools()` – declare available tools and tool_choice hints for subsequent generation.
+- `generate()` – single model call using current `TaskState`; default solver.
+- `self_critique()` – request critique from (optionally different) model, replay critique, and regenerate.
+- `multiple_choice()` – formats choices, supports CoT and multi-answer options; pair with `choice()` scorer.
+- `chain()` – sequential composition helper for solver pipelines.
+- `plan` / `Plan` – named step plan runner; enables logging and reuse of plan structure.
+- `fork()` – branch execution across solvers and merge results.
+- `bridge()` – connect to external agent frameworks as solvers.
+- `basic_agent`, `react` agents, `human_agent` – agent scaffolds usable as solvers for interactive, multi-turn, or human-in-loop baselines.

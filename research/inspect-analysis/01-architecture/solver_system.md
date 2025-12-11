@@ -1,0 +1,8 @@
+Solvers are async callables that transform a `TaskState` and optionally call the model via the provided `generate()` helper. They are decorated with `@solver` for registry/name capture and composition.
+
+- **TaskState:** carries `messages`, `user_prompt`, `output`, `choices`, `metadata`, `tools/tool_choice`, `store`, `sample_id`, and runtime info. The default `generate()` helper appends the model’s assistant message and fills `output`.
+- **Composition:** Pass a list of solvers to `Task(solver=[...])` or compose with helpers: `chain(...)` (sequential), `fork(...)` (branch flows), `plan/Plan` (named steps), and `bridge` (wrap external agent frameworks). `basic_agent`, `react` agents, and `human_agent` can be used as solvers via `as_solver()`.
+- **Built-ins:** `prompt_template`, `system_message`, `user_message`, `chain_of_thought`, `use_tools`, `generate`, `self_critique`, `multiple_choice`, `plan`, `chain`, `fork`, `bridge`, `basic_agent`, `human_agent`.
+- **Execution model:** Tasks have an optional `setup` solver list that always runs, then the main solver (or solver chain), then optional `cleanup`. Solvers can call `get_model()` to swap models mid-run or use model roles (e.g., grader vs. primary). Tool calls respect approval policies and run inside sandboxes.
+- **Concurrency & limits:** Solvers are async; Inspect schedules samples respecting `max_tasks`, `max_samples`, `max_connections`, and per-sample limits (`message_limit`, `token_limit`, `time_limit`, `working_limit`). Retries and rate-limit handling are built into model APIs.
+- **Extensibility:** Custom solvers are just async functions `(state, generate) -> state`, enabling complex attack strategies, multi-turn flows, or orchestration around external systems.

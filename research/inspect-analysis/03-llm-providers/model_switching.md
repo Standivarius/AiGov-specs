@@ -1,0 +1,6 @@
+- Specify models per run: `inspect eval task.py --model openai/gpt-4o` or `eval(task, model="anthropic/claude-3.5-sonnet")`.
+- Swap providers for the same scenario: run `inspect eval` multiple times or use `eval_set(tasks=[...], model=["openai/gpt-4o","anthropic/claude-3.5-sonnet","google/gemini-2.5-pro"])` or `inspect eval-set ... --model openai/gpt-4o,anthropic/claude-3.5-sonnet`.
+- Use **model roles** to assign different providers within one task (e.g., `grader`, `critic`, `red_team`). Pass `--model-role grader=google/gemini-2.5-pro` (CLI) or `eval(..., model_roles={"grader": "google/gemini-2.5-pro"})`.
+- Override model config per role or per eval with `--temperature/--top-p/--max-tokens` or `model_args` (`-M`). Roles fall back to the primary eval model when not provided.
+- Batch/multi-model evaluation: eval-set scheduler runs tasks across models in parallel with retry support; logs include `eval.plan` and per-model usage for comparison.
+- Local/custom routing: use OpenAI-compatible (`openai-api`), `openrouter`, `vllm`, `sglang`, `ollama`, or custom `@modelapi` providers to test the same scenario across self-hosted endpoints.

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Inspect Sample",
+  "type": "object",
+  "description": "Atomic scenario fed to a Task solver; produced by dataset readers (CSV/JSON/JSONL/HF/custom).",
+  "properties": {
+    "input": {
+      "type": [ "string", "array" ],
+      "description": "Prompt text or list of chat messages (ChatMessage objects with role/content)."
+    },
+    "choices": {
+      "type": [ "array", "null" ],
+      "items": { "type": "string" },
+      "description": "Optional multiple-choice options (letters auto-assigned in solver)."
+    },
+    "target": {
+      "type": [ "string", "array" ],
+      "description": "Ideal answer or rubric text for model-graded scorers; for MC, a capital letter or list of letters.",
+      "default": ""
+    },
+    "id": {
+      "type": [ "integer", "string", "null" ],
+      "description": "Unique sample identifier; auto-assigned if absent."
+    },
+    "metadata": {
+      "type": [ "object", "null" ],
+      "description": "Arbitrary metadata (category, difficulty, source, variables for templating)."
+    },
+    "sandbox": {
+      "type": [ "string", "array", "object", "null" ],
+      "description": "SandboxEnvironment spec for this sample (type and optional config file/tuple)."
+    },
+    "files": {
+      "type": [ "object", "null" ],
+      "additionalProperties": { "type": "string" },
+      "description": "Map of sandbox paths to file contents/paths/URLs (supports namespaced targets like \"victim:/shared/file.txt\")."
+    },
+    "setup": {
+      "type": [ "string", "null" ],
+      "description": "Inline script or path to run before solving the sample (executes in default sandbox)."
+    }
+  },
+  "required": [ "input" ],
+  "additionalProperties": false,
+  "dataset_loaders": [
+    "csv_dataset(path, sample_fields=FieldSpec or record_to_sample, shuffle=False)",
+    "json_dataset(path, sample_fields=FieldSpec or record_to_sample, shuffle=False)",
+    "file_dataset(path) (auto-detects csv/json/jsonl)",
+    "hf_dataset(repo, split, sample_fields, trust=False)",
+    "example_dataset(name) (built-in examples)",
+    "MemoryDataset([Sample,...]) for programmatic construction"
+  ]
+}

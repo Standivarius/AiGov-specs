@@ -1,0 +1,5 @@
+- **Schema alignment:** VerifyWise-style fields (`prompt`, `expected_output`, `case_id`, `tags`) map cleanly to Inspect Samples (`input`, `target`, `id`, `metadata`). Use `FieldSpec` or `record_to_sample` to ingest VerifyWise JSON/CSV directly.
+- **Execution model:** Inspect solvers/scorers can run unchanged over imported scenarios; per-sample metadata can retain compliance labels, categories, and difficulty for downstream reporting.
+- **Result export:** EvalLogs expose per-sample `scores`, `answer` extraction, transcripts, and token usage. Write a small transformer to emit VerifyWise result objects (`case_id`, `model`, `status/value`, `explanation`, `metadata`) using `read_eval_log`.
+- **Gaps:** No native VerifyWise exporter today; needs a lightweight adapter layer for result format and any VerifyWise-specific audit trail. Logging already captures transcripts and scoring provenance needed for compliance evidence.
+- **Feasibility:** High—no core changes required; implement ingest + export utilities around the existing API.

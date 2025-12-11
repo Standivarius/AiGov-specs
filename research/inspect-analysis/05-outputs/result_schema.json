@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Eval Results",
+  "type": "object",
+  "description": "Aggregated scoring results for an eval (mirrors EvalResults + EvalScore + Score).",
+  "properties": {
+    "total_samples": { "type": "integer", "description": "Dataset samples * epochs." },
+    "completed_samples": { "type": "integer", "description": "Completed without error." },
+    "early_stopping": { "type": ["object","null"], "description": "Summary when early stopping triggered." },
+    "scores": {
+      "type": "array",
+      "description": "One entry per scorer used in the run.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "description": "Scorer name in results." },
+          "scorer": { "type": "string", "description": "Implementation/registry name." },
+          "reducer": { "type": ["string","null"], "description": "Epoch reducer if applicable." },
+          "scored_samples": { "type": ["integer","null"] },
+          "unscored_samples": { "type": ["integer","null"] },
+          "params": { "type": "object", "description": "Args used to instantiate scorer." },
+          "metrics": {
+            "type": "object",
+            "description": "Metric results keyed by metric name.",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "value": { "type": ["number","integer"] },
+                "params": { "type": "object" },
+                "metadata": { "type": ["object","null"] }
+              },
+              "required": ["name","value"]
+            }
+          },
+          "metadata": { "type": ["object","null"] }
+        },
+        "required": ["name","scorer","metrics"]
+      }
+    },
+    "sample_scores": {
+      "type": "array",
+      "description": "Optional flattened view of per-sample scores (from EvalSample or reductions).",
+      "items": {
+        "type": "object",
+        "properties": {
+          "sample_id": { "type": ["integer","string","null"] },
+          "epoch": { "type": ["integer","null"] },
+          "scorer": { "type": "string" },
+          "value": {},
+          "answer": { "type": ["string","null"] },
+          "explanation": { "type": ["string","null"] },
+          "metadata": { "type": ["object","null"] }
+        },
+        "required": ["scorer","value"]
+      }
+    },
+    "metadata": { "type": ["object","null"] }
+  },
+  "required": ["total_samples","completed_samples","scores"]
+}

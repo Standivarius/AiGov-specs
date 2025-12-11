@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Inspect Model Provider Config",
+  "type": "object",
+  "description": "Configuration for selecting and tuning a model provider (used by eval(), inspect eval CLI, or task model_roles).",
+  "properties": {
+    "model": {
+      "type": "string",
+      "description": "Provider/model identifier (e.g., \"openai/gpt-4o\", \"anthropic/claude-3.5-sonnet\", \"openrouter/gryphe/mythomax-l2-13b\")."
+    },
+    "base_url": {
+      "type": [ "string", "null" ],
+      "description": "Optional override endpoint for OpenAI-compatible or self-hosted services."
+    },
+    "config": {
+      "type": "object",
+      "description": "GenerateConfig overrides (applies to this model).",
+      "properties": {
+        "temperature": { "type": [ "number", "null" ] },
+        "top_p": { "type": [ "number", "null" ] },
+        "top_k": { "type": [ "integer", "null" ] },
+        "max_tokens": { "type": [ "integer", "null" ] },
+        "stop_seqs": { "type": [ "array", "null" ], "items": { "type": "string" } },
+        "frequency_penalty": { "type": [ "number", "null" ] },
+        "presence_penalty": { "type": [ "number", "null" ] },
+        "seed": { "type": [ "integer", "null" ] },
+        "num_choices": { "type": [ "integer", "null" ] },
+        "logprobs": { "type": [ "boolean", "null" ] },
+        "top_logprobs": { "type": [ "integer", "null" ] },
+        "parallel_tool_calls": { "type": [ "boolean", "null" ] },
+        "reasoning_effort": { "type": [ "string", "null" ] },
+        "reasoning_tokens": { "type": [ "integer", "null" ] },
+        "reasoning_summary": { "type": [ "string", "null" ] },
+        "system_message": { "type": [ "string", "null" ] },
+        "timeout": { "type": [ "integer", "null" ] },
+        "attempt_timeout": { "type": [ "integer", "null" ] },
+        "max_retries": { "type": [ "integer", "null" ] },
+        "max_connections": { "type": [ "integer", "null" ] },
+        "batch": { "type": [ "boolean", "integer", "object", "null" ] },
+        "cache": { "type": [ "boolean", "string", "object", "null" ] },
+        "response_schema": { "type": [ "object", "null" ] },
+        "extra_body": { "type": [ "object", "null" ] }
+      },
+      "additionalProperties": true
+    },
+    "model_args": {
+      "type": "object",
+      "description": "Provider-specific kwargs (e.g., location for Gemini, aws_region/profile for Bedrock, OpenRouter routing args, vLLM logits).",
+      "additionalProperties": true
+    },
+    "api_key_var": {
+      "type": [ "string", "null" ],
+      "description": "Name of environment variable carrying credentials (e.g., OPENAI_API_KEY)."
+    },
+    "roles": {
+      "type": "object",
+      "description": "Optional model roles (grader, critic, red_team, etc.) mapping to provider configs of the same shape.",
+      "additionalProperties": { "$ref": "#" }
+    }
+  },
+  "required": [ "model" ],
+  "additionalProperties": false
+}

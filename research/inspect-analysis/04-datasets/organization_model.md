@@ -1,0 +1,6 @@
+- **Repo layout:** Tasks live in Python modules (`@task` functions). Datasets sit beside tasks (CSV/JSON/JSONL) or in shared data dirs; Hugging Face datasets are pulled at runtime. Inspect Evals provides 100 prebuilt task modules.
+- **Sample enrichment:** Each Sample can carry `metadata` (categorization, difficulty, variables), per-sample `sandbox` overrides, `files` to mount into sandboxes, and `setup` scripts to prepare environments.
+- **Templates & params:** `prompt_template` and message solvers substitute `{prompt}` plus any `metadata` keys, enabling templated scenario families. Task parameters (`-T key=value` or `--task-config yaml/json`) allow scenario variants without code changes.
+- **Versioning:** Tasks include `name` and `version` fields for log traceability; datasets can be shuffled/filtered while preserving ids for reproducibility.
+- **Packaging:** Tasks, solvers, scorers, and datasets can be packaged as Python distributions and discovered via entry points (used by Inspect Evals). Custom dataset readers can live alongside task code.
+- **Artifacts:** Logs per run capture the exact dataset location, sample ids, and metadata in `EvalLog.eval.dataset` for traceability across organized scenario suites.

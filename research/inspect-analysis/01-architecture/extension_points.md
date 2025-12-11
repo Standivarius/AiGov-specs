@@ -1,0 +1,9 @@
+- **Model APIs:** Implement `ModelAPI` subclasses and register with `@modelapi` entry points to add providers (local inference, hosted services, routers). Model args (`-M/--model-config`) flow through to custom APIs.
+- **Sandboxes:** Extend `SandboxEnvironment` with `@sandboxenv` to support alternative container runtimes or remote hosts; governs tool execution isolation. Existing `local` and `docker` ship in core.
+- **Approvers:** Create approval policies to intercept/approve/modify tool calls (registered via entry points). Useful for governance and safety review of tool usage.
+- **Storage:** Provide custom storage backends for datasets, prompts, and logs via entry-point based storage extensions (fsspec-compatible URIs supported out of the box).
+- **Hooks/observability:** Register hooks to tap into task lifecycle events for monitoring/telemetry. Events and model usage already flow into EvalLogs for offline analysis.
+- **Custom solvers/agents:** Write new `@solver` or `@agent` implementations to orchestrate bespoke attack strategies, tool loops, or external agents (bridge).
+- **Custom scorers/metrics:** Build new `@scorer` functions (including model-graded variants) and metrics/reducers to support compliance or bespoke rubrics.
+- **Datasets/readers:** Use `FieldSpec`, `record_to_sample`, `MemoryDataset`, or new dataset readers to ingest arbitrary scenario schemas. Samples support per-sample sandbox/files/setup metadata.
+- **Tools:** Provide new tools via `@tool` or MCP servers; tooling supports bash/python execution, web search/browser, computer control, code execution, plan updates, memory, and MCP adapters.

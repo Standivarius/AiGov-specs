@@ -1,0 +1,6 @@
+- Decorate async functions with `@solver`; signature receives `TaskState` and `generate`. Modify `state.messages`, `state.user_prompt`, `state.tools`, and call `await generate(state)` when you want a model turn.
+- Compose with `chain`/`plan`/`fork` or return a list of solvers from an `@solver` factory for reuse. Agents (`react`, `basic_agent`) can be extended or bridged for more complex attack strategies.
+- Access models dynamically via `get_model(model|role, config=GenerateConfig(...), **model_args)` to mix providers (e.g., use a strong attacker model while evaluating a target model).
+- Use tools within solvers (`use_tools([...])`, or directly set `state.tools`) and respect approval/sandbox settings for safer exploit attempts.
+- Encode iterative/attack strategies: loops over hints, self-critique, red-team prompts, tool-assisted probing, or multi-turn negotiation. Use `store`/`metadata` to persist intermediate state.
+- Log-friendly: `@solver` capture names/params automatically; outputs appear in EvalLog plan for replay/repro.

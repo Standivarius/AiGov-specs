@@ -1,0 +1,24 @@
+- **OpenAI** (`openai`) – GPT-4o/mini, reasoning models; env: `OPENAI_API_KEY`, `OPENAI_BASE_URL`.
+- **Anthropic** (`anthropic`) – Claude 3.x/4/4.1/4o variants; env: `ANTHROPIC_API_KEY`.
+- **Google Gemini** (`google`) – Gemini 1.5/2.0/2.5; supports location/model args; env: `GOOGLE_API_KEY`.
+- **Mistral** (`mistral`) – mistral/mixtral models; env: `MISTRAL_API_KEY`.
+- **DeepSeek** (`deepseek` via OpenAI-compatible) – reasoning model; env: `DEEPSEEK_API_KEY`, optional `DEEPSEEK_BASE_URL`.
+- **Grok** (`grok`) – env: `GROK_API_KEY`.
+- **AWS Bedrock** (`aws-bedrock`) – access via AWS credentials; model args for region/profile.
+- **Azure AI** (`azure-ai`) – Azure-hosted OpenAI; env: `AZURE_AI_API_KEY`, `AZURE_AI_ENDPOINT`.
+- **Together AI** (`together-ai`) – HF-hosted models; env: `TOGETHER_API_KEY`.
+- **Groq** (`groq`) – low-latency models; env: `GROQ_API_KEY`.
+- **Fireworks AI** (`fireworks-ai`) – env: `FIREWORKS_API_KEY`.
+- **SambaNova** (`sambanova`) – env: `SAMBANOVA_API_KEY`.
+- **Cloudflare** (`cloudflare`) – env: `CLOUDFLARE_API_KEY`.
+- **Perplexity** (`perplexity`) – env: `PPLX_API_KEY`.
+- **Hugging Face** (`hugging-face`) – Inference endpoints; env: `HF_TOKEN`, optional `HF_API_BASE`.
+- **vLLM** (`vllm`) – local/hosted OpenAI-compatible; supports streaming/logprobs.
+- **SGLang** (`sglang`) – local OpenAI-compatible.
+- **TransformerLens** (`transformer-lens`) – interpretability models; no API key needed.
+- **Ollama** (`ollama`) – local model host; env: `OLLAMA_API_BASE`.
+- **llama-cpp-python** (`llama-cpp-python`) – local inference; supports logprobs.
+- **OpenAI Compatible** (`openai-api`) – generic OpenAI-style endpoints with custom `base_url`/provider.
+- **OpenRouter** (`openrouter`) – router with custom routing args; env: `OPENROUTER_API_KEY`.
+- **HF Inference Providers** (`hf-inference-providers`) – routed providers via HF with `HF_TOKEN`.
+- **Custom Models** (`custom/...`) – register new providers via `@modelapi` entry points.

@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Inspect Task",
+  "type": "object",
+  "description": "Logical task definition bound to a dataset, solver pipeline, and scorer/metrics. Mirrors inspect_ai.Task signature.",
+  "properties": {
+    "dataset": {
+      "description": "Dataset to evaluate. Supports csv/json/jsonl/hf loaders, MemoryDataset, or inline samples.",
+      "oneOf": [
+        { "type": "string", "description": "Path or module reference (e.g., 'math.py', 'data.jsonl')" },
+        { "type": "array", "items": { "$ref": "#/$defs/sample" } },
+        { "type": "object", "description": "Programmatic Dataset instance reference or loader args" }
+      ]
+    },
+    "setup": {
+      "description": "Optional solver(s) that run before the main solver (always run even if solver is overridden).",
+      "anyOf": [ { "$ref": "#/$defs/solverRef" }, { "type": "array", "items": { "$ref": "#/$defs/solverRef" } } ]
+    },
+    "solver": {
+      "description": "Primary solver or solver chain. Defaults to generate() when omitted.",
+      "anyOf": [ { "$ref": "#/$defs/solverRef" }, { "type": "array", "items": { "$ref": "#/$defs/solverRef" } } ],
+      "default": "generate()"
+    },
+    "cleanup": {
+      "description": "Async function invoked after solvers/scorers for each sample.",
+      "type": "string"
+    },
+    "scorer": {
+      "description": "Scorer used to evaluate outputs (e.g., match(), model_graded_qa()).",
+      "anyOf": [ { "$ref": "#/$defs/scorerRef" }, { "type": "array", "items": { "$ref": "#/$defs/scorerRef" } } ]
+    },
+    "metrics": {
+      "description": "Override metrics supplied by the scorer. Accepts metric names or grouped metric maps.",
+      "anyOf": [
+        { "type": "array", "items": { "$ref": "#/$defs/metricRef" } },
+        { "type": "object", "additionalProperties": { "type": "array", "items": { "$ref": "#/$defs/metricRef" } } }
+      ]
+    },
+    "model": {
+      "description": "Default model for the task (provider/model string or Model instance).",
+      "type": [ "string", "object" ]
+    },
+    "config": {
+      "description": "GenerateConfig overrides (temperature, max_tokens, top_p, retries, etc.).",
+      "type": "object",
+      "properties": {
+        "temperature": { "type": [ "number", "null" ] },
+        "top_p": { "type": [ "number", "null" ] },
+        "max_tokens": { "type": [ "integer", "null" ] },
+        "timeout": { "type": [ "integer", "null" ] },
+        "max_retries": { "type": [ "integer", "null" ] },
+        "max_connections": { "type": [ "integer", "null" ] },
+        "stop_seqs": { "type": [ "array", "null" ], "items": { "type": "string" } },
+        "seed": { "type": [ "integer", "null" ] },
+        "batch": { "description": "Enable batching (bool/int/object)", "type": [ "boolean", "integer", "object", "null" ] }
+      },
+      "additionalProperties": true
+    },
+    "model_roles": {
+      "description": "Named model roles (e.g., grader, critic) mapped to provider/model names plus optional config/base_url/args.",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "model": { "type": "string" },
+          "config": { "type": "object" },
+          "base_url": { "type": [ "string", "null" ] },
+          "args": { "type": "object", "additionalProperties": true }
+        }
+      }
+    },
+    "sandbox": {
+      "description": "Sandbox environment type or spec tuple (e.g., 'docker', ['docker','config.yaml']).",
+      "type": [ "string", "array", "object", "null" ]
+    },
+    "approval": {
+      "description": "Tool-use approval policy (path, name, or ApprovalPolicyConfig).",
+      "type": [ "string", "array", "object", "null" ]
+    },
+    "epochs": {
+      "description": "Number of epochs or Epochs reducer config.",
+      "type": [ "integer", "object", "null" ]
+    },
+    "fail_on_error": {
+      "description": "Fail-fast policy (true, false, proportion [0-1], or count >1).",
+      "type": [ "boolean", "number", "null" ]
+    },
+    "continue_on_fail": {
+      "description": "Continue running samples even if fail_on_error triggers.",
+      "type": [ "boolean", "null" ]
+    },
+    "message_limit": { "description": "Max messages per sample.", "type": [ "integer", "null" ] },
+    "token_limit": { "description": "Max tokens per sample.", "type": [ "integer", "null" ] },
+    "time_limit": { "description": "Wall-clock seconds per sample.", "type": [ "integer", "null" ] },
+    "working_limit": { "description": "Active work seconds per sample.", "type": [ "integer", "null" ] },
+    "early_stopping": {
+      "description": "EarlyStopping callbacks/config.",
+      "type": [ "object", "null" ]
+    },
+    "display_name": { "type": [ "string", "null" ] },
+    "name": { "type": [ "string", "null" ] },
+    "version": { "type": [ "integer", "string" ], "default": 0 },
+    "metadata": { "type": [ "object", "null" ] }
+  },
+  "required": [ "dataset" ],
+  "additionalProperties": false,
+  "$defs": {
+    "sample": {
+      "type": "object",
+      "properties": {
+        "input": { "description": "Prompt text or chat message list.", "type": [ "string", "array" ] },
+        "choices": { "type": [ "array", "null" ], "items": { "type": "string" } },
+        "target": { "type": [ "string", "array" ], "default": "" },
+        "id": { "type": [ "integer", "string", "null" ] },
+        "metadata": { "type": [ "object", "null" ] },
+        "sandbox": { "type": [ "string", "array", "object", "null" ] },
+        "files": { "type": [ "object", "null" ], "additionalProperties": { "type": "string" } },
+        "setup": { "type": [ "string", "null" ] }
+      },
+      "required": [ "input" ],
+      "additionalProperties": false
+    },
+    "solverRef": {
+      "description": "Name/registry reference for @solver functions or inline solver params.",
+      "type": [ "string", "object" ]
+    },
+    "scorerRef": {
+      "description": "Name/registry reference for @scorer functions or inline scorer params.",
+      "type": [ "string", "object" ]
+    },
+    "metricRef": {
+      "description": "Metric name or definition (e.g., accuracy(), stderr(), mean_score()).",
+      "type": [ "string", "object" ]
+    }
+  }
+}

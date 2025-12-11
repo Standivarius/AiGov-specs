@@ -1,0 +1,11 @@
+- `inspect eval <task.py|module>` – run a single task. Key flags: `--model`, `-M key=value` (model args), `--temperature/top-p/max-tokens/max-connections`, `--solver`, `--task-config/-T`, `--sample-id/--limit/--sample-shuffle`, `--epochs`, `--log-dir`, `--log-format eval|json`, `--no-log-images`, `--sandbox`, `--approval`.
+- `inspect eval-set <tasks...>` – run multiple tasks/models together with retries and reuse. Flags: `--model` (comma list), `--retry-attempts/--retry-wait/--retry-connections`, `--max-tasks`, `--log-dir` (required).
+- `inspect eval-retry <logdir>` – retry failed eval-set work.
+- `inspect view <logdir|logfile>` – interactive viewer for logs (streaming supported with realtime logging).
+- `inspect log <subcommand>` – `show`, `json`, `condense`, `convert` operations on log files.
+- `inspect score <logfile>` – rescore an existing transcript/log with a scorer.
+- `inspect list` – list available tasks/solvers/scorers in path or installed packages.
+- `inspect cache` – manage model cache entries.
+- `inspect sandbox` – sandbox utilities/cleanup.
+- `inspect trace` – debugging trace for model calls or tool interactions.
+- `inspect info` – version and environment info.

@@ -1,0 +1,5 @@
+- **GitHub Actions patterns:** `.github/workflows` shows lint/test/publish pipelines. Add a job to `pip install inspect-ai` (or your task package), set provider secrets (e.g., `OPENAI_API_KEY`), and run `inspect eval ... --log-dir logs` or `inspect eval-set ...` with `--log-format=eval`.
+- **Artifacts:** Upload `.eval`/`.json` logs as workflow artifacts for review; `inspect log json` can produce CI-friendly summaries or CSVs.
+- **Parallelism controls:** Use CLI flags (`--max-samples`, `--max-connections`) to stay within CI resource limits; disable images via `--no-log-images` to keep artifacts small.
+- **Caching:** Model caching (`CachePolicy`) and dataset downloads (HF) can be cached between runs if the CI agent preserves workspace. Avoid provider key leakage—never persist logs containing secrets.
+- **Other CI (Jenkins/GitLab):** Same pattern—install deps, set env keys, run `inspect eval` or `eval_set`, collect logs. Use `INSPECT_LOG_DIR` to route logs to a mounted volume.

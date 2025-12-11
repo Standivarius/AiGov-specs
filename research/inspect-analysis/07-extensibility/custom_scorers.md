@@ -1,0 +1,6 @@
+- Implement with `@scorer(metrics=[...])` and an async inner function `(state: TaskState, target: Target) -> Score`.
+- Use `Score(value=..., answer=..., explanation=..., metadata=...)` to emit grading detail. Values can be categorical (`C`/`I`/`P`) or numeric for metrics such as `mean`.
+- Reuse model-graded patterns: clone `model_graded_qa`/`model_graded_fact` templates with custom instructions and `grade_pattern` for GDPR/ISO rubrics; assign a stronger/alternate grader via `model=` or `model_role="grader"`. Majority vote supported by passing a list of grader models.
+- Add custom metrics/reducers (e.g., `metric(lambda scores: ...)` or `grouped`) to aggregate policy dimensions separately.
+- Scorers can call external services (REST, scanners) but should remain `async` to benefit from Inspect’s concurrency; observe provider rate limits with `max_connections`.
+- Register within packages so they are discoverable by name (`inspect list --scorers`). Scorer params and metadata are logged for auditability.
