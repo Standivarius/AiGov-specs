@@ -1,0 +1,97 @@
+{
+  "dataset_config": {
+    "useBuiltin": "string | null (chatbot | rag | agent | safety)",
+    "path": "string | null (filesystem path to JSON array)",
+    "benchmark": "string | null (DeepEval benchmark name)",
+    "prompts": "array<TestCase> (single-turn cases)",
+    "conversations": "array<ConversationScenario>",
+    "limit": "integer | null",
+    "categories": "array<string> | null (filter prompts)",
+    "difficulties": "array<string> | null (easy|medium|hard)",
+    "ids": "array<string> | null (prompt ids)"
+  },
+  "test_case": {
+    "id": "string (unique within dataset)",
+    "category": "string (topic/feature such as billing, technical, safety)",
+    "prompt": "string (input sent to model)",
+    "expected_output": "string (reference answer)",
+    "expected_keywords": "array<string> optional",
+    "difficulty": "string optional (easy|medium|hard)",
+    "retrieval_context": "array<string> optional for RAG",
+    "protected_attributes": "map<string,string|number|boolean> optional (used as metadata)",
+    "metadata": "map<string,any> optional"
+  },
+  "conversation_scenario": {
+    "scenario": "string (label for the conversation)",
+    "turns": [
+      {
+        "role": "user | assistant | system",
+        "content": "string"
+      }
+    ],
+    "expected_output": "string optional (gold assistant reply if provided)"
+  },
+  "evaluation_config": {
+    "model": {
+      "name": "string",
+      "provider": "openai | anthropic | gemini | xai | mistral | huggingface | ollama | custom_api",
+      "accessMethod": "string (UI naming, mapped to provider)",
+      "generation": {
+        "max_tokens": "integer",
+        "temperature": "float",
+        "top_p": "float"
+      },
+      "apiKey": "string optional",
+      "endpointUrl": "string optional"
+    },
+    "judgeLlm": {
+      "provider": "string optional",
+      "model": "string optional",
+      "apiKey": "string optional"
+    },
+    "taskType": "string (chatbot | rag | agent | safety)",
+    "bundles": "map<string,boolean> (feature toggles such as summarization, hallucination, contextual_recall)",
+    "metrics": "map<string,boolean> (UI toggles; evaluator recomputes based on taskType)",
+    "thresholds": "map<string,number> (per-metric pass thresholds)"
+  },
+  "evaluation_result_item": {
+    "sample_id": "string (id or scenario#turn_n)",
+    "input": "string (prompt or conversation slice)",
+    "actual_output": "string",
+    "expected_output": "string",
+    "protected_attributes": "map<string,any>",
+    "response_length": "integer (characters)",
+    "word_count": "integer",
+    "metric_scores": {
+      "MetricName": {
+        "score": "number 0-1",
+        "passed": "boolean",
+        "threshold": "number",
+        "reason": "string"
+      }
+    },
+    "timestamp": "ISO-8601 string"
+  },
+  "metric_set": [
+    "g_eval_correctness",
+    "g_eval_coherence",
+    "g_eval_tonality",
+    "g_eval_safety",
+    "answer_relevancy",
+    "faithfulness",
+    "contextual_relevancy",
+    "hallucination",
+    "bias",
+    "toxicity",
+    "contextual_recall",
+    "contextual_precision",
+    "ragas",
+    "task_completion",
+    "tool_correctness",
+    "knowledge_retention",
+    "conversation_completeness",
+    "conversation_relevancy",
+    "role_adherence",
+    "summarization"
+  ]
+}

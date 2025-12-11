@@ -1,0 +1,4 @@
+article,description,eval_check,severity
+"5(1)(c)","Data minimization","Verify datasets justify each attribute; enforce masking/pseudonymization before AI training","Medium"
+"5-6","Lawfulness, fairness, transparency, purpose limitation","Require lawful basis and consent/contract proofs before AI ingestion; track data use register","High"
+"(unspecified - reference only)","Cross-border transfers and retention","Retention schedule + DPO approval for transfers noted in AI data governance guidance","Medium"

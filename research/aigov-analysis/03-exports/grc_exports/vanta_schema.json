@@ -1,0 +1,20 @@
+{
+  "control_record": {
+    "framework": "string (ISO 27001 | ISO 42001 | EU AI Act | Internal)",
+    "control_id": "string",
+    "title": "string",
+    "status": "string (pass|fail|not_applicable|in_progress)",
+    "owner": "string",
+    "reviewer": "string optional",
+    "approver": "string optional",
+    "last_reviewed": "date optional",
+    "evidence": [
+      {
+        "file_id": "integer",
+        "description": "string"
+      }
+    ],
+    "risk_link": "integer optional (risk_id)",
+    "notes": "string"
+  }
+}

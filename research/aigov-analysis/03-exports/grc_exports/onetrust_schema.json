@@ -1,0 +1,18 @@
+{
+  "record": {
+    "project_id": "integer",
+    "item_type": "string (risk | control | assessment finding)",
+    "title": "string",
+    "description": "string",
+    "gdpr_article": "string optional",
+    "iso_reference": "string optional (e.g., ISO27001 A.5.1, ISO42001 A.9)",
+    "owner": "string",
+    "status": "string (Not Started|In Progress|Completed|Requires review)",
+    "likelihood": "string optional",
+    "severity": "string optional",
+    "current_risk_level": "string optional",
+    "due_date": "date optional",
+    "evidence_files": "array<integer> (file ids)",
+    "notes": "string"
+  }
+}

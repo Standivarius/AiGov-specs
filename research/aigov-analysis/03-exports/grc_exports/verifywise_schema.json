@@ -1,0 +1,31 @@
+{
+  "report": {
+    "source": "string (Project risks report | Compliance tracker report | Assessment tracker report | Models and risks report | Vendors and risks report | Training registry report | Policy manager report)",
+    "project_id": "integer",
+    "filename": "string",
+    "uploaded_by": "integer",
+    "uploaded_time": "date",
+    "summary": {
+      "total_items": "integer",
+      "avg_scores": "map<string,number> optional (for eval metrics)",
+      "completed_at": "date optional"
+    },
+    "items": [
+      {
+        "id": "string|integer",
+        "title": "string",
+        "status": "string",
+        "owner": "string|integer",
+        "framework_ref": "string optional",
+        "risk_fields": {
+          "likelihood": "string optional",
+          "severity": "string optional",
+          "current_risk_level": "string optional",
+          "deadline": "date optional"
+        },
+        "metric_scores": "map<string,number|object> optional",
+        "evidence_file_ids": "array<integer>"
+      }
+    ]
+  }
+}

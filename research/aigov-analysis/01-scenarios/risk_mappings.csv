@@ -1,0 +1,4 @@
+scenario,gdpr_article,iso_control_reference,notes
+"Data minimization for AI datasets","5(1)(c) - data minimization","ISO/IEC 42001 A.9 Data for AI systems","Referenced in ISO 42001 annex guidance; no explicit scenario-to-control map beyond compliance guidance."
+"AI policy governance","(not specified in codebase)","ISO/IEC 27001 A.5 Policies for information security","Cross-mapped from ISO 27001 annex to ISO 42001 clause 5; no GDPR article identified."
+"Safety/adversarial prompts","(not mapped)","(not mapped)","Safety dataset covers jailbreak/adversarial prompts but no direct GDPR or ISO linkage surfaced."

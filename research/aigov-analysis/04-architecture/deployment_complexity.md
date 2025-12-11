@@ -1,0 +1,8 @@
+- Services: postgresdb, redis, backend (Node/Express API), worker (background jobs using same image), frontend (React static bundle), bias_and_fairness_backend (FastAPI), plus EvalServer/FastAPI not explicitly in compose but present in repo. Each service configured via env vars; backend depends on Postgres + Redis; worker shares backend image.
+- Data stores: PostgreSQL (tenant schemas), Redis (cache/queue), artifact storage on disk (`artifacts/` in EvalServer/BiasAndFairnessModule) for reports/results.
+- Networking: backend exposed on `$BACKEND_PORT`; redis internal; bias_and_fairness_backend exposed internally; frontend image expected to proxy to backend; EvalServer likely separate FastAPI deployment similar to bias_and_fairness_backend.
+- Dependencies: Python stack for EvalServer/Bias modules (pydantic, FastAPI, DeepEval), Node/TypeScript for backend/frontend, Docker and Git. Model providers optionally require OpenAI/Anthropic/Gemini/XAI/Mistral/Ollama endpoints.
+- Estimated install effort (solo engineer):
+  - Containerized path (docker-compose): 2–3 hours including env setup, pulling images, seeding DB, verifying health checks.
+  - Source-based setup (backend + EvalServer + Bias module): 6–8 hours to install Node deps, Python envs, configure Postgres/Redis, load migrations, and validate DeepEval/Bias pipelines.
+- Operational considerations: DB migrations numerous (multi-tenant schemas); artifacts directories require write permissions; Judge/model API keys must be injected for evaluation metrics; Ollama model pulls may be lengthy if used.

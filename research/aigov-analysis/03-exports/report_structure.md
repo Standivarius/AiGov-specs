@@ -1,0 +1,10 @@
+- Header metadata: report filename, project_id, source (Project risks / Compliance tracker / Assessment tracker / Clauses & annexes / Vendors & risks / Models & risks / Training registry / Policy manager), uploader name/id, uploaded_time.
+- Context: dataset/model metadata when applicable (model_id, evaluation_type, total_samples, protected_attributes, metrics_configuration) drawn from evaluation artifacts.
+- Sections (by report type):
+  - Project/Vendor/Model risk reports: list of risks with owner, lifecycle phase, category, likelihood, severity, current_risk_level, mitigation_status, deadlines, mitigation_plan, implementation_strategy, approval_status, evidence references.
+  - Compliance/Assessment trackers: clause/control/subcontrol records with status, owners, reviewers, due_date, key_questions, evidence_examples, implementation_description, cross_mappings (framework references).
+  - Clauses/Annexes report: ISO 27001/42001 clause or annex tree with requirement_summary, key_questions, evidence_examples, cross_mappings.
+  - Training registry / Policy manager: entries with owner, status, due dates, evidence files.
+- Metrics summaries (LLM eval artifacts): per-metric average, pass_rate, per-sample metric_scores, response lengths, timestamps; category/difficulty breakdowns when provided.
+- Attachments/evidence: file records (id, filename, project_id, source, uploaded_by, uploaded_time, optional parent_id/sub_id/meta_id for linkage).
+- Export formats supported by UI utilities: CSV/XLSX/PDF generated from column definitions + row objects (see `tableExport` usage).

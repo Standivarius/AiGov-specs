@@ -1,0 +1,6 @@
+- Backend (Servers): Node.js + Express, Sequelize (PostgreSQL), TypeScript domain models; Redis cache/queue; background worker shares backend image.
+- Frontend (Clients): React + TypeScript + Vite + MUI; table export utilities (CSV/XLSX/PDF); themed components and risk/compliance UI structures.
+- Evaluation services: FastAPI-based EvalServer and BiasAndFairnessServers; Python evaluation engines using Pydantic for config schema, DeepEval for LLM metrics, HuggingFace/Ollama/OpenAI/Anthropic/Gemini/XAI/Mistral client support; YAML config validation via Pydantic.
+- Fairness engine: BiasAndFairnessModule with dataset loaders, metric registry, plotting/visualizations, inference clients.
+- Data artifacts: JSON/CSV summaries of DeepEval runs; fairness reports; file manager evidence blobs stored in Postgres.
+- Infrastructure: Docker Compose (postgresdb, redis, backend, worker, frontend, bias_and_fairness_backend; EvalServer inferred); Kubernetes manifests present for deployment; SMTP for notifications.

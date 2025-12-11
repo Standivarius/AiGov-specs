@@ -1,0 +1,26 @@
+{
+  "evidence_file": {
+    "id": "integer",
+    "filename": "string",
+    "content": "binary/blob",
+    "project_id": "integer",
+    "uploaded_by": "user_id",
+    "uploaded_time": "date",
+    "source": "string enum (Assessment tracker group | Compliance tracker group | Management system clauses group | Reference controls group | Main clauses group | Annex controls group | risk-report | vendor-report | etc.)",
+    "type": "string optional (derived export type)",
+    "is_evidence": "boolean (flags attachment vs general file)",
+    "parent_id": "integer (topic/control id depending on source)",
+    "sub_id": "integer optional (subtopic/subcontrol id)",
+    "meta_id": "integer optional (question/subcontrol id)",
+    "notes": "string optional"
+  },
+  "linkage": {
+    "risk_id": "integer optional",
+    "control_id": "integer optional",
+    "subcontrol_id": "integer optional",
+    "question_id": "integer optional",
+    "assessment_mapping": "string optional",
+    "framework": "string optional (ISO 27001 | ISO 42001 | EU AI Act | NIST AI RMF | GDPR)",
+    "validation_status": "string optional (e.g., uploaded/verified/rejected)"
+  }
+}

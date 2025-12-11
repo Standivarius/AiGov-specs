@@ -1,0 +1,4 @@
+control_or_clause,requirement,guidance_or_test_method
+"A.5 Organizational policies and governance / sub_id 1.1 Policies for AI","Management defines and endorses AI policies","Fields: sub_id, order_no, title, description, guidance, is_applicable, implementation_description, auditor_feedback"
+"A.5 Organizational policies and governance / sub_id 3.2 Segregation of duties","Segregate conflicting AI duties; track justification when not applicable","Schema supports justification_for_exclusion plus applicability flag"
+"Clause schema","Clauses list clause_no/title with nested subclauses each containing arrangement, index, title, requirement_summary, key_questions[], evidence_examples[], implementation_description, status, owner, reviewer, approver, due_date, cross_mappings","Used for core management system clauses 4-10 (Context, Leadership, Planning, Support, Operation, Performance Evaluation, Improvement)"
