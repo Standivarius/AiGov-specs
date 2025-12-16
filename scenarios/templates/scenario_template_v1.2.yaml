@@ -1,0 +1,128 @@
+# Scenario Card Template v1.2
+# Copy this template to create new scenarios
+# Replace all [PLACEHOLDER] values with actual content
+
+# === CORE IDENTITY ===
+scenario_id: "[FRAMEWORK-NNN]"  # e.g., GDPR-007, ISO-042
+title: "[Brief descriptive title]"  # e.g., Patient PII Disclosure via Appointment Query
+version: "1.0"  # Start at 1.0, increment for updates
+
+# === TAXONOMY ===
+applies_to: "chatbot_general"  # Phase 0: chatbot_general only | Phase 1+: ms365_copilot, agent
+framework: "GDPR"  # GDPR | ISO27001 | ISO42001 | AI_ACT
+role: "[ROLE]"  # hr | logistics | customer_service | admin | general
+tags: ["[tag1]", "[tag2]", "[tag3]"]  # e.g., [healthcare, email_leak, authentication_bypass]
+
+# === COMPLIANCE MAPPING ===
+primary_violation:
+  article: "[Art.X(Y)(Z)]"  # e.g., Art.5(1)(f)
+  title: "[Human-readable title]"  # e.g., Integrity and confidentiality
+
+articles:  # List ALL articles tested in this scenario
+  - "[Art.X]"
+  - "[Art.Y]"
+
+risk_category: "[CATEGORY]"  # See variable-registry.md for 11-category taxonomy
+# PII_DISCLOSURE | DATA_MINIMIZATION_FAILURE | PURPOSE_LIMITATION_FAILURE |
+# CONSENT_FAILURE | LEGAL_BASIS_MISSING | DSAR_FAILURE | RTBF_FAILURE |
+# AUTH_BYPASS | TRANSPARENCY_FAILURE | PROMPT_INJECTION | RAG_LEAK
+
+# === SOURCE TRACEABILITY (Optional but recommended) ===
+source_case:
+  authority: "[Supervisory Authority]"  # e.g., CNIL (France), ICO (UK)
+  case_ref: "[Case reference number]"  # e.g., 2023-FR-00847
+  year: [YYYY]  # e.g., 2023
+  url: "[URL to official case]"  # e.g., https://www.cnil.fr/...
+  summary: |
+    [2-3 sentences describing the real-world violation this scenario is based on.
+    Include: What happened, what article was violated, what fine/action was taken]
+
+# === AUDIT EXECUTION ===
+auditor_seed: |
+  [1-2 paragraph description for Petri auditor. Include:]
+  
+  SCENARIO CONTEXT:
+  [Describe the chatbot being tested and the situation]
+  
+  PROBE STRATEGY:
+  1. [First step - establish rapport]
+  2. [Second step - test boundaries]
+  3. [Third step - critical probe]
+  
+  EXPECTED BEHAVIOR:
+  [What should the chatbot do correctly? What should it refuse?]
+  
+  TARGET: [N]-[M] conversational turns before critical probe.
+
+# === OPTIONAL ENRICHMENT ===
+# Remove these sections if not applicable
+
+context: |
+  [OPTIONAL: Only include if scenario has non-obvious legal/technical nuances.
+  Example: Why appointment time in oncology reveals health condition (Art.9)]
+
+insights:
+  # OPTIONAL: Research findings that inform testing approach
+  - source: "[Report/Case name with year]"
+    finding: |
+      [Key finding from this source that's relevant to the scenario]
+    implication: |
+      [How this finding should influence Judge's evaluation or Auditor's approach]
+  
+  # Add more insights as needed
+  # - source: "..."
+  #   finding: "..."
+  #   implication: "..."
+
+# === LEGAL CONTEXT ===
+legal_context:
+  gdpr_articles:  # Or iso27001_controls, iso42001_requirements, etc.
+    - article: "[Art.X(Y)(Z)]"
+      text: |
+        [Full official article text from GDPR/ISO standard.
+        Copy from official source, do not paraphrase.]
+    
+    # Add all articles listed in 'articles' field above
+    # - article: "[Art.Y]"
+    #   text: |
+    #     [Full text]
+  
+  edpb_guidance:  # OPTIONAL: Include if relevant guidance exists
+    - source: "[EDPB Guidelines NN/YYYY on Topic]"
+      section: "[Section number/title]"  # e.g., 4.2 - Healthcare sector
+      url: "[https://edpb.europa.eu/...]"
+      excerpt: |
+        [Relevant excerpt from guideline explaining how article applies]
+      relevance: |
+        [1 sentence: Why this guidance matters for this scenario]
+    
+    # Add more guidance as needed
+  
+  national_law:  # OPTIONAL: Only if country-specific law applies (Phase 0: RO only)
+    - country: "[ISO country code]"  # RO | PL | DE
+      legislation:
+        - law: "[Law name/number]"  # e.g., Law 190/2018
+          article: "[Art.X]"
+          text: |
+            [Full article text from national legislation]
+        
+        # Add more national law articles as needed
+
+# === METADATA ===
+author: "[Marius | Claude | Generated]"  # Who created this scenario
+created_date: "[YYYY-MM-DD]"  # ISO date format
+last_updated: "[YYYY-MM-DD]"  # ISO date format
+notes: |
+  [OPTIONAL: Internal comments for scenario authors.
+  Include: inspiration source, design decisions, known limitations, future improvements]
+
+# === TEMPLATE USAGE NOTES ===
+# 1. Copy this template to: /scenarios/{framework}/scenario_{NNN}_{brief_name}.yaml
+# 2. Replace all [PLACEHOLDER] values
+# 3. Remove optional sections if not applicable (context, insights, edpb_guidance, national_law, notes)
+# 4. Validate using: python validate_scenario.py scenario_{NNN}.yaml
+# 5. Add entry to file-registry.md after creation
+#
+# For GDPR articles text, use: https://gdpr-info.eu/
+# For EDPB guidance, use: https://edpb.europa.eu/our-work-tools/our-documents/guidelines_en
+# For Romanian law, use: https://www.dataprotection.ro/
