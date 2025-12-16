@@ -2,7 +2,29 @@
 
 **Purpose**: Central tracking of all project files, dependencies, and ownership  
 **Status**: Living document - update when files added/removed/renamed  
-**Last Updated**: 2025-12-15
+**Last Updated**: 2025-12-16
+
+---
+
+## Governance Files
+
+| File Path | Purpose | Owner | Version | Dependencies |
+|-----------|---------|-------|---------|-------------|
+| `/docs/project-principles.md` | Development philosophy, quality standards | Marius/Claude | v1.0 | None |
+| `/docs/project-governance.md` | Living documents, consistency checks | Claude | v1.0 | None |
+| `/docs/specs/variable-registry.md` | Variable governance | Claude | v1.0 | All schemas |
+| `/docs/specs/file-registry.md` | File tracking (this file) | Claude | v1.1 | None |
+| `/docs/specs/client-intake-variables.md` | Client onboarding inputs | Claude | v1.0 | scenario-card-schema |
+
+---
+
+## Custom Instructions (For userPreferences)
+
+| File Path | Purpose | Location | Status |
+|-----------|---------|----------|--------|
+| `/docs/custom-instructions/memory.md` | Project context for Memory section | Project Settings | Active |
+| `/docs/custom-instructions/instructions.md` | Behaviors for Instructions section | Project Settings | Active |
+| `/docs/custom-instructions/files.md` | Quick reference for Files section | Project Settings | Active |
 
 ---
 
@@ -13,8 +35,6 @@
 | `/docs/specs/scenario-card-schema.md` | Scenario test specification | Marius/Claude | v1.2 | variable-registry.md |
 | `/schemas/behaviour_json_v0_phase0.schema.json` | Judge output format (Phase 0) | Claude | v0 | scenario-card-schema.md |
 | `/docs/specs/data-contracts-v0.1.md` | Pipeline data interfaces | Claude | v0.1 | behaviour_json schema |
-| `/docs/specs/variable-registry.md` | Variable governance | Claude | v1.0 | All schemas |
-| `/docs/specs/file-registry.md` | File tracking (this file) | Claude | v1.0 | None |
 
 ---
 
@@ -32,8 +52,8 @@
 
 | File Path | Purpose | Framework | Status |
 |-----------|---------|-----------|--------|
-| `/scenarios/gdpr/scenario_001_third_party_pii.yaml` | Third-party PII disclosure test | GDPR | Pending |
-| `/scenarios/gdpr/scenario_007_healthcare_email.yaml` | Healthcare email leak test | GDPR | Pending |
+| `/scenarios/gdpr/scenario_001_third_party_pii.yaml` | Third-party PII disclosure test | GDPR | Pending creation |
+| `/scenarios/gdpr/scenario_007_healthcare_email.yaml` | Healthcare email leak test | GDPR | Pending creation |
 | `/scenarios/templates/scenario_template_v1.2.yaml` | Template for new scenarios | All | Active |
 
 ---
@@ -102,6 +122,19 @@ behaviour_json_v0_phase0.schema.json
 
 evaluation_criteria/gdpr_evaluation_criteria.yaml
   └─> Official GDPR Art.24, Art.32, supervisory authority standards
+
+variable-registry.md
+  ├─> scenario-card-schema.md
+  ├─> behaviour_json schema
+  └─> client-intake-variables.md
+
+project-principles.md
+  └─> Project Knowledge (read every new chat)
+
+project-governance.md
+  ├─> project-principles.md
+  ├─> file-registry.md
+  └─> variable-registry.md
 ```
 
 ---
@@ -130,11 +163,14 @@ evaluation_criteria/gdpr_evaluation_criteria.yaml
 
 ## Orphan Detection
 
-**Run quarterly**: Search repo for files NOT in file-registry.md
+**Run at end of each project week**: Search repo for files NOT in file-registry.md
 
 ```bash
 # Find all YAML files
 find . -name "*.yaml" -o -name "*.yml"
+
+# Find all Markdown files
+find . -name "*.md"
 
 # Compare against file-registry.md
 # Flag orphans for review
@@ -142,5 +178,14 @@ find . -name "*.yaml" -o -name "*.yml"
 
 ---
 
+## Change Log
+
+| Date | Version | Changes | Impact |
+|------|---------|---------|--------|
+| 2025-12-15 | 1.0 | Initial registry created | All files |
+| 2025-12-16 | 1.1 | Added governance files, custom instructions, updated dependencies | Schema v1.2 ecosystem |
+
+---
+
 **Maintenance**: Update this registry when files are added/removed/renamed  
-**Review**: Monthly consistency check (compare registry vs actual files)
+**Review**: Weekly consistency check (compare registry vs actual files)
