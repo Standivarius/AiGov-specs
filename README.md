@@ -11,6 +11,7 @@
 - [🚀 Phase 0 Details](docs/planning/Phase-0-Detailed.md) - Current phase deliverables
 - [📝 Decision Log](docs/planning/Decision-Log.md) - Chronological decision history
 - [Eval harness contract (transcript-first)](docs/specs/eval-harness-contract-v0.1.md) - Interface between specs and eval
+- [Contracts + links (transcript-first)](docs/contracts/_index.md) - Scenario, target, and evidence contracts
 - [📊 GitHub Projects Board](https://github.com/users/Standivarius/projects) - Task tracking
 - [🔬 Research Index](https://drive.google.com/drive/folders/1CHKXcmgKRpieDUDC2TmKchHCvPgSBgeCc) - Deep research docs
 

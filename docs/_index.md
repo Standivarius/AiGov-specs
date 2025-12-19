@@ -9,4 +9,5 @@ Key specs and canonical artifacts:
 - File registry: [docs/specs/file-registry.md](./specs/file-registry.md)
 - Data contracts: [docs/specs/data-contracts-v0.1.md](./specs/data-contracts-v0.1.md)
 - Eval harness contract (transcript-first): [docs/specs/eval-harness-contract-v0.1.md](./specs/eval-harness-contract-v0.1.md)
+- Contracts + links (transcript-first): [docs/contracts/_index.md](./contracts/_index.md)
 - Client intake variables: [docs/specs/client-intake-variables.md](./specs/client-intake-variables.md)
