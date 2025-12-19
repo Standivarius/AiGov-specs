@@ -120,6 +120,16 @@
 
 ---
 
+## 2025-12-19
+
+### Eval Harness Contract in Specs (ADR-0011)
+**Decision**: Maintain the eval harness contract in AiGov-specs and link out to Aigov-eval runbooks/reports  
+**Rationale**: Avoid duplicated runbooks across repos; keep a single source of truth for the interface  
+**Impact**: Specs define the contract, eval repo owns implementation and execution details  
+**References**: `/docs/specs/eval-harness-contract-v0.1.md`
+
+---
+
 ## Template for Future Entries
 
 ```markdown
@@ -141,4 +151,4 @@
 - Keep entries concise (2-5 sentences per field)
 - Reference source (conversation, research, partner feedback)
 
-**Last Updated**: 2025-12-15
+**Last Updated**: 2025-12-19

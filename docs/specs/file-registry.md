@@ -2,7 +2,7 @@
 
 **Purpose**: Central tracking of all project files, dependencies, and ownership  
 **Status**: Living document - update when files added/removed/renamed  
-**Last Updated**: 2025-12-16
+**Last Updated**: 2025-12-19
 
 ---
 
@@ -16,6 +16,7 @@
 | `/docs/specs/variable-registry.md` | Variable governance | Claude | v1.0 | All schemas |
 | `/docs/specs/file-registry.md` | File tracking (this file) | Claude | v1.1 | None |
 | `/docs/specs/client-intake-variables.md` | Client onboarding inputs | Claude | v1.0 | scenario-card-schema-v1.2 |
+| `/docs/specs/eval-harness-contract-v0.1.md` | Eval harness contract (transcript-first) | Claude | v0.1 | Aigov-eval minimal loop |
 | `/docs/decisions/2025-12-19_specs_repo_structure_cleanup_v0.1.md` | Repo structure cleanup decision | Claude | v0.1 | docs/_index.md |
 
 ---
@@ -186,6 +187,7 @@ find . -name "*.md"
 |------|---------|---------|--------|
 | 2025-12-15 | 1.0 | Initial registry created | All files |
 | 2025-12-16 | 1.1 | Added governance files, custom instructions, updated dependencies | Schema v1.2 ecosystem |
+| 2025-12-19 | 1.2 | Added eval harness contract | Specs/eval interface |
 
 ---
 
