@@ -16,7 +16,9 @@ Key specs and canonical artifacts:
 
 ## Phase 2 Specs (Production Architecture)
 
-Evaluation system architecture and contracts:
+**👉 [Phase 2 Index & Overview](./specs/phase2-index.md)** - Complete guide to Phase 2 evaluation system
+
+Core specifications:
 
 - **System overview**: [docs/specs/phase2-system-overview-v0.1.md](./specs/phase2-system-overview-v0.1.md) - Phase 2 architecture principles and component responsibilities
 - **Artefact model + run manifest**: [docs/specs/phase2-artefact-model-v0.1.md](./specs/phase2-artefact-model-v0.1.md) - Immutable artefact bundles and provenance tracking

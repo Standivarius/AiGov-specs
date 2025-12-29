@@ -165,7 +165,7 @@ The **run manifest** is the single source of truth for an evaluation run's confi
 - **Uniqueness**: Generated at run start, never reused
 
 #### bundle Section
-- `bundle_hash`: SHA-256 hash of bundle_manifest.json (first 16 chars for readability)
+- `bundle_hash`: SHA-256 hash of bundle_manifest.json (first 32 hex chars for readability)
 - `bundle_manifest_path`: Relative path to bundle artefact
 - `scenario_count`: Total scenarios in bundle (for quick validation)
 - `client_id`: Client identifier (matches override namespace)
