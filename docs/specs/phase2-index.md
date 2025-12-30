@@ -119,6 +119,14 @@ Includes:
 
 ---
 
+## Locked decisions (Phase 2)
+
+Architectural decisions that define Phase 2 governance boundaries:
+
+- **[ADR-002: Judge–AKG Responsibility Boundary](../decisions/ADR-002-judge-akg-responsibility-boundary-v0.1.md)** - Defines verdict ownership (Judge owns verdict, AKG provides grounding context), establishes audit accountability, and sets limits on knowledge graph responsibility
+
+---
+
 ## Phase 2 Design Principles
 
 ### 1. Fail-Closed by Default

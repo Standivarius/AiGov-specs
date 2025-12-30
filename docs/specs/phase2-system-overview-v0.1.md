@@ -100,6 +100,8 @@ Scenario Bundle → Run (transcript only) → Judgement (offline) → Report
 - Apply scoring logic with fail-closed error handling
 - Output judgement artefact (scores + evidence + provenance)
 
+**Governance**: This component is governed by [ADR-002 (Judge–AKG Responsibility Boundary)](../decisions/ADR-002-judge-akg-responsibility-boundary-v0.1.md), which defines verdict ownership and audit accountability.
+
 ### G. Report Generator
 **Location**: `projects/report-gen/`
 **Contract**: Report input v0.1 (from data-contracts-v0.1.md)
