@@ -14,6 +14,8 @@ Phase 2 separates **evidence capture** (run stage) from **scoring** (judgement s
 - **Fail-closed safety**: Run failures don't cascade to judgement
 - **Audit compliance**: Clear separation between evidence and interpretation
 
+**Governance**: This component is governed by [ADR-002 (Judge–AKG Responsibility Boundary)](../decisions/ADR-002-judge-akg-responsibility-boundary-v0.1.md), which defines verdict ownership and grounding limits.
+
 ---
 
 ## Architecture
