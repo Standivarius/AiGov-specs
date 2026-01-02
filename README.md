@@ -78,6 +78,9 @@ Aigov-specs/
 
 This is a solo founder project with occasional partner input (Ally - Nokia CISO). Structure optimized for clarity and least friction.
 
+
+
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Standivarius/AiGov-specs)
 ---
 
 **Last Updated**: 2025-12-11  
