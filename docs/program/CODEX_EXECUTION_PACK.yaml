@@ -1,0 +1,78 @@
+tasks:
+  - task_id: TASK-001
+    repo: AiGov-specs
+    op: edit
+    from_path: AiGov-specs/docs/contracts/terminology.md
+    to_path: AiGov-specs/docs/contracts/terminology.md
+    edit_instructions: "Replace entire file content with the Terminology Lock content (this pack’s canonical definition). Ensure boundary rule: EP in aigov-mvp; PE in aigov-evals."
+    req_ids: ["REQ-001", "REQ-002"]
+    eval_ids: ["EVAL-002"]
+    evid_ids: ["EVID-002"]
+    verification_commands:
+      - "grep -n \"Boundary rule\" AiGov-specs/docs/contracts/terminology.md"
+    expected_result: "Terminology file contains EP/PE definitions and boundary rule."
+
+  - task_id: TASK-002
+    repo: AiGov-specs
+    op: create
+    from_path: null
+    to_path: AiGov-specs/docs/program/PRD.md
+    edit_instructions: "Create canonical PRD in specs repo program pack."
+    req_ids: ["REQ-001"]
+    eval_ids: []
+    evid_ids: []
+    verification_commands:
+      - "test -f AiGov-specs/docs/program/PRD.md"
+    expected_result: "PRD file exists."
+
+  - task_id: TASK-003
+    repo: AiGov-specs
+    op: create
+    from_path: null
+    to_path: AiGov-specs/docs/program/REQUIREMENTS_EVALS_MATRIX.md
+    edit_instructions: "Create matrix file."
+    req_ids: ["REQ-001"]
+    eval_ids: []
+    evid_ids: []
+    verification_commands:
+      - "test -f AiGov-specs/docs/program/REQUIREMENTS_EVALS_MATRIX.md"
+    expected_result: "Matrix markdown exists."
+
+  - task_id: TASK-004
+    repo: AiGov-specs
+    op: create
+    from_path: null
+    to_path: AiGov-specs/docs/program/REQUIREMENTS_EVALS_MATRIX.json
+    edit_instructions: "Create machine export of matrix."
+    req_ids: ["REQ-001"]
+    eval_ids: []
+    evid_ids: []
+    verification_commands:
+      - "python -c \"import json; json.load(open('AiGov-specs/docs/program/REQUIREMENTS_EVALS_MATRIX.json')); print('ok')\""
+    expected_result: "Matrix JSON parses."
+
+  - task_id: TASK-005
+    repo: AiGov-specs
+    op: create
+    from_path: null
+    to_path: AiGov-specs/docs/program/REPO_COHERENCE_REPORT.md
+    edit_instructions: "Create coherence report with duplicates/contradictions and move-map."
+    req_ids: ["REQ-001"]
+    eval_ids: []
+    evid_ids: []
+    verification_commands:
+      - "test -f AiGov-specs/docs/program/REPO_COHERENCE_REPORT.md"
+    expected_result: "Coherence report exists."
+
+  - task_id: TASK-006
+    repo: AiGov-specs
+    op: create
+    from_path: null
+    to_path: AiGov-specs/docs/program/ACTION_PLAN.md
+    edit_instructions: "Create phased plan and point to this execution pack."
+    req_ids: ["REQ-001"]
+    eval_ids: []
+    evid_ids: []
+    verification_commands:
+      - "test -f AiGov-specs/docs/program/ACTION_PLAN.md"
+    expected_result: "Action plan exists."
