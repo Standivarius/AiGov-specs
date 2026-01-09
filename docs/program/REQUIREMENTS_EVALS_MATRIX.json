@@ -1,0 +1,79 @@
+[
+  {
+    "req_id": "REQ-001",
+    "capability": "Repo boundary enforcement (EP vs PE)",
+    "acceptance": "EP runtime code in aigov-mvp; PE eval suites in aigov-evals; canonical schemas/docs in AiGov-specs.",
+    "eval_ids": ["EVAL-001"],
+    "evid_ids": ["EVID-001"],
+    "implementation_paths": ["aigov-mvp/aigov_ep/**"],
+    "evaluation_paths": ["aigov-evals/tests/**"],
+    "evidence_paths": ["AiGov-specs/docs/program/REPO_COHERENCE_REPORT.md"],
+    "status": "partial (repo reality contradicts target)"
+  },
+  {
+    "req_id": "REQ-010",
+    "capability": "Intake config validation",
+    "acceptance": "Missing required fields fail fast with actionable errors; output normalized.",
+    "eval_ids": ["EVAL-010"],
+    "evid_ids": ["EVID-010"],
+    "implementation_paths": ["aigov-mvp/aigov_ep/intake/**"],
+    "evaluation_paths": ["aigov-evals/tests/ep_intake/**"],
+    "evidence_paths": ["aigov-mvp/runs/**/intake_validated.json"],
+    "status": "not started"
+  },
+  {
+    "req_id": "REQ-011",
+    "capability": "Deterministic bundle compiler",
+    "acceptance": "Same catalogue+overrides+intake produces identical bundle hash; merge conflicts surfaced.",
+    "eval_ids": ["EVAL-011"],
+    "evid_ids": ["EVID-201"],
+    "implementation_paths": ["aigov-mvp/aigov_ep/bundle/**"],
+    "evaluation_paths": ["aigov-evals/tests/ep_bundle/**"],
+    "evidence_paths": ["aigov-mvp/bundles/**/bundle_manifest.json"],
+    "status": "not started"
+  },
+  {
+    "req_id": "REQ-030",
+    "capability": "Stage A transcript-only",
+    "acceptance": "Stage A generates transcript + run_manifest; excludes scores/judgement outputs.",
+    "eval_ids": ["EVAL-030"],
+    "evid_ids": ["EVID-301", "EVID-302"],
+    "implementation_paths": ["aigov-mvp/aigov_ep/execute/**"],
+    "evaluation_paths": ["aigov-evals/tests/ep_execute/**"],
+    "evidence_paths": ["aigov-mvp/runs/**/transcript.json", "aigov-mvp/runs/**/run_manifest.json"],
+    "status": "conflicted (current runner scores inline in aigov-evals)"
+  },
+  {
+    "req_id": "REQ-040",
+    "capability": "Offline judgement schema-valid & fail-closed",
+    "acceptance": "Judge outputs validate against AiGov-specs canonical schema; invalid outputs hard-fail.",
+    "eval_ids": ["EVAL-040"],
+    "evid_ids": ["EVID-401"],
+    "implementation_paths": ["aigov-mvp/aigov_ep/judge/**"],
+    "evaluation_paths": ["aigov-evals/tests/judge/test_j02_schema.py"],
+    "evidence_paths": ["AiGov-specs/schemas/behaviour_json_v0_phase0.schema.json"],
+    "status": "partial"
+  },
+  {
+    "req_id": "REQ-060",
+    "capability": "L1/L2/L3 reporting exports",
+    "acceptance": "EP generates L1/L2/L3 outputs consistent with Phase2 reporting spec.",
+    "eval_ids": ["EVAL-060"],
+    "evid_ids": ["EVID-601", "EVID-602", "EVID-603"],
+    "implementation_paths": ["aigov-mvp/aigov_ep/reporting/**"],
+    "evaluation_paths": ["aigov-evals/tests/ep_reporting/**"],
+    "evidence_paths": ["AiGov-specs/docs/specs/phase2-reporting-exports-v0.1.md"],
+    "status": "not started"
+  },
+  {
+    "req_id": "REQ-080",
+    "capability": "Verdict label standardization",
+    "acceptance": "Canonical labels enforced across schema/judge/reporting; legacy mapped.",
+    "eval_ids": ["EVAL-080"],
+    "evid_ids": ["EVID-080"],
+    "implementation_paths": ["AiGov-specs/schemas/**", "aigov-mvp/aigov_ep/judge/**"],
+    "evaluation_paths": ["aigov-evals/tests/judge/**"],
+    "evidence_paths": ["AiGov-specs/docs/contracts/terminology.md"],
+    "status": "not started"
+  }
+]
