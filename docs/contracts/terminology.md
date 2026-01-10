@@ -56,6 +56,7 @@ Examples:
   Examples:
   - `AiGov-specs/schemas/behaviour_json_v0_phase0.schema.json`
   - `AiGov-specs/docs/specs/phase2-artefact-model-v0.1.md`
+  - Canonical taxonomy contracts live at `AiGov-specs/docs/contracts/taxonomy/`
 - **aigov-mvp**: EP runtime product implementation (client-run)
 - **aigov-evals**: PE regression suites, datasets, CI eval harness
 
