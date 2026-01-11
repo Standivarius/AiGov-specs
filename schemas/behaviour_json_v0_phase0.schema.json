@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://aigov.io/schemas/behaviour_json_v0_phase0.json",
-  "title": "behaviour_json_v0_phase0",
-  "description": "Simplified compliance finding schema for Phase 0 (no AKG/RAG, no confidence scoring)",
+  "$id": "https://github.com/Standivarius/AiGov-specs/schemas/behaviour_json_v0_phase0.schema.json",
+  "title": "Behaviour JSON v0 Phase 0 (AiGov-specs canonical schema)",
+  "description": "Canonical schema from AiGov-specs for judge output in behaviour_json_v0_phase0 format. NOTE: This is currently a placeholder copy of the eval schema. The canonical specs schema will eventually require: (1) IDs in AUD-YYYYMMDD-NNN format, (2) UUIDs for certain fields, (3) reasoning as single string (not array), (4) inspect_provenance with log_file/sample_id/epoch fields.",
   "type": "object",
   "required": [
     "audit_id",
@@ -17,148 +17,126 @@
   "properties": {
     "audit_id": {
       "type": "string",
-      "pattern": "^AUD-\\d{8}-\\d{3}$",
-      "description": "Unique audit identifier (format: AUD-YYYYMMDD-NNN)",
-      "examples": ["AUD-20251214-001"]
+      "description": "Unique identifier for the audit session (eventual requirement: AUD-YYYYMMDD-NNN format)",
+      "pattern": "^[a-zA-Z0-9_-]+$"
     },
     "run_id": {
       "type": "string",
-      "format": "uuid",
-      "description": "UUID v4 for this Inspect evaluation run"
+      "description": "Unique identifier for this specific run (eventual requirement: UUID)",
+      "pattern": "^[a-zA-Z0-9_-]+$"
     },
     "finding_id": {
       "type": "string",
-      "format": "uuid",
-      "description": "UUID v5 deterministic hash of scenario+evidence (for deduplication)"
+      "description": "Unique identifier for this finding (eventual requirement: UUID)",
+      "pattern": "^[a-zA-Z0-9_-]+$"
     },
     "scenario_id": {
       "type": "string",
-      "pattern": "^[A-Z]+-\\d{3}$",
-      "description": "Scenario identifier (format: FRAMEWORK-NNN)",
-      "examples": ["GDPR-007", "ISO27001-042"]
+      "description": "Identifier of the scenario being evaluated"
     },
     "framework": {
       "type": "string",
-      "enum": ["GDPR", "ISO27001", "ISO42001", "AI_ACT"],
-      "description": "Compliance framework being tested"
+      "description": "Compliance framework (e.g., GDPR, HIPAA)",
+      "enum": [
+        "GDPR",
+        "HIPAA",
+        "CCPA",
+        "SOC2",
+        "ISO27001"
+      ]
     },
     "rating": {
       "type": "string",
-      "enum": ["VIOLATED", "COMPLIANT", "UNDECIDED"],
-      "description": "Judge's verdict on compliance"
+      "description": "Overall compliance rating",
+      "enum": [
+        "VIOLATED",
+        "COMPLIANT",
+        "UNDECIDED"
+      ]
     },
     "reasoning": {
-      "type": "string",
-      "minLength": 10,
-      "description": "Natural language explanation of rating"
-    },
-    "violations": {
       "type": "array",
-      "description": "Array of compliance violations found (empty if COMPLIANT)",
+      "description": "List of reasoning statements explaining the rating (eventual requirement: single string, not array)",
       "items": {
-        "type": "object",
-        "required": ["article", "severity", "evidence"],
-        "properties": {
-          "article": {
-            "type": "string",
-            "description": "Framework article reference",
-            "examples": ["Art.5(1)(f)", "A.8.2.3", "Art.13"]
-          },
-          "description": {
-            "type": "string",
-            "description": "What went wrong (optional in Phase 0)"
-          },
-          "severity": {
-            "type": "string",
-            "enum": ["HIGH", "MEDIUM", "LOW"],
-            "description": "Impact severity"
-          },
-          "evidence": {
-            "type": "array",
-            "minItems": 1,
-            "description": "Evidence supporting this violation",
-            "items": {
-              "type": "object",
-              "required": ["turn", "role", "snippet"],
-              "properties": {
-                "turn": {
-                  "type": "integer",
-                  "minimum": 1,
-                  "description": "Conversation turn number (1-indexed, for human reading)"
-                },
-                "role": {
-                  "type": "string",
-                  "enum": ["user", "assistant", "system"],
-                  "description": "Message role"
-                },
-                "snippet": {
-                  "type": "string",
-                  "minLength": 1,
-                  "description": "Exact quote from transcript"
-                },
-                "context": {
-                  "type": "string",
-                  "description": "What triggered the violation (optional)"
-                }
-              }
-            }
-          }
-        }
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "legal_references": {
+      "type": "array",
+      "description": "Legal citations and article references",
+      "items": {
+        "type": "string"
       }
+    },
+    "signals": {
+      "type": "array",
+      "description": "List of detected compliance signals",
+      "items": {
+        "type": "string"
+      }
+    },
+    "severity": {
+      "type": "string",
+      "description": "Severity level of the finding",
+      "enum": [
+        "CRITICAL",
+        "HIGH",
+        "MEDIUM",
+        "LOW",
+        "INFO"
+      ]
     },
     "inspect_provenance": {
       "type": "object",
-      "required": ["log_file", "sample_id", "epoch"],
-      "description": "Traceability to Inspect evaluation logs",
+      "description": "Provenance metadata about the inspection/judge process (eventual requirements: log_file, sample_id, epoch)",
+      "required": [
+        "model",
+        "timestamp_utc"
+      ],
       "properties": {
+        "model": {
+          "type": "string",
+          "description": "Model or judge version used"
+        },
+        "temperature": {
+          "type": "number",
+          "description": "Temperature parameter used (if applicable)",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "mock": {
+          "type": "boolean",
+          "description": "Whether this was a mock/offline judge run"
+        },
+        "timestamp_utc": {
+          "type": "string",
+          "description": "ISO 8601 timestamp of when the judgment was made",
+          "format": "date-time"
+        },
+        "source_fixture": {
+          "type": "string",
+          "description": "Source fixture file (for offline judge)"
+        },
         "log_file": {
           "type": "string",
-          "description": "Path to Inspect evaluation log"
+          "description": "Path to log file (will be required in strict specs schema)"
         },
         "sample_id": {
           "type": "string",
-          "description": "Inspect sample identifier"
+          "description": "Sample identifier (will be required in strict specs schema)"
         },
         "epoch": {
           "type": "integer",
-          "minimum": 1,
-          "description": "Evaluation epoch number"
-        },
-        "git_commit": {
-          "type": "string",
-          "pattern": "^[a-f0-9]{7,40}$",
-          "description": "Git commit hash of scenario/code version (optional)"
+          "description": "Epoch timestamp (will be required in strict specs schema)"
         }
-      }
+      },
+      "additionalProperties": true
     },
     "metadata": {
       "type": "object",
-      "description": "Additional context (optional in Phase 0)",
-      "properties": {
-        "judge_model": {
-          "type": "string",
-          "description": "Model used for compliance evaluation",
-          "examples": ["google/gemini-2.0-flash"]
-        },
-        "target_model": {
-          "type": "string",
-          "description": "System under test"
-        },
-        "auditor_model": {
-          "type": "string",
-          "description": "Petri auditor agent model"
-        },
-        "timestamp": {
-          "type": "string",
-          "format": "date-time",
-          "description": "When evaluation was performed"
-        },
-        "language": {
-          "type": "string",
-          "pattern": "^[A-Z]{2}$",
-          "description": "Audit language (ISO 639-1)"
-        }
-      }
+      "description": "Additional metadata",
+      "additionalProperties": true
     }
   },
   "additionalProperties": false
