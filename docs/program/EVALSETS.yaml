@@ -1,0 +1,61 @@
+version: 1
+purpose: >
+  Canonical definitions of EVALSET bundles ("one command proves it").
+  EVALSETS group concrete checks aligned with the requirements/evals matrix.
+  These definitions are stable across multi-repo and future Nx monorepo.
+  A runner may be added later; for now this is the canonical spec.
+
+variables:
+  # Default local multi-repo workspace (Windows). Override in CI/Codespaces/monorepo.
+  AIGOV_SPECS_ROOT: "C:\\Users\\User\\OneDrive - DMR Ergonomics\\aigov-workspace\\AiGov-specs"
+  AIGOV_MVP_ROOT: "C:\\Users\\User\\OneDrive - DMR Ergonomics\\aigov-workspace\\AiGov-mvp"
+  AIGOV_EVAL_ROOT: "C:\\Users\\User\\OneDrive - DMR Ergonomics\\aigov-workspace\\Aigov-eval"
+
+evalsets:
+  EVALSET-MIGRATION-SMOKE-v1:
+    description: >
+      Proves the PR1–PR6 migration invariants end-to-end on a clean checkout:
+      contracts are canonical in specs, vendored into EP/PE via sync scripts,
+      and PE minimal_loop smoke enforces Stage B artefacts + schema validation.
+    steps:
+      - name: "Specs: ensure main is up to date"
+        shell: "pwsh"
+        cwd: "${AIGOV_SPECS_ROOT}"
+        run: |
+          git checkout main
+          git pull
+
+      - name: "MVP: ensure main is up to date + sync vendored contracts"
+        shell: "pwsh"
+        cwd: "${AIGOV_MVP_ROOT}"
+        run: |
+          git checkout main
+          git pull
+          python tools/sync_taxonomy_from_specs.py --specs-root "..\\AiGov-specs"
+          git diff --name-only
+        ok_criteria: "git diff --name-only prints nothing"
+
+      - name: "EVAL: ensure main is up to date + sync vendored contracts"
+        shell: "pwsh"
+        cwd: "${AIGOV_EVAL_ROOT}"
+        run: |
+          git checkout main
+          git pull
+          python tools/sync_contracts_from_specs.py --specs-root "..\\AiGov-specs"
+          git diff --name-only
+        ok_criteria: "git diff --name-only prints nothing"
+
+      - name: "EVAL: PATH sanity (avoid wrong aigov-ep)"
+        shell: "pwsh"
+        cwd: "${AIGOV_EVAL_ROOT}"
+        run: |
+          where.exe aigov-ep
+        ok_criteria: "path points to the expected install (editable from AiGov-mvp when used)"
+
+      - name: "EVAL: run EP judge smoke (Stage B artefacts + behaviour_json schema validation)"
+        shell: "pwsh"
+        cwd: "${AIGOV_EVAL_ROOT}"
+        run: |
+          $env:AIGOV_RUN_EP_SMOKE="1"
+          python -m pytest tests/minimal_loop/test_ep_cli_judge_smoke.py -q
+        ok_criteria: "1 passed (and exit code 0)"
